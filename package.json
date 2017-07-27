@@ -1,0 +1,27 @@
+{
+  "name": "paypal-plus-brasil",
+  "description": "Adicione facilmente opções de pagamento do PayPal Plus ao seu site do WordPress/WooCommerce.",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/apuhlmann/paypal-plus-brasil"
+  },
+  "main": "Gruntfile.js",
+  "devDependencies": {
+    "autoprefixer": "^7.1.1",
+    "cssnano": "^3.10.0",
+    "grunt": "^1.0.1",
+    "grunt-checktextdomain": "^1.0.1",
+    "grunt-contrib-imagemin": "^2.0.1",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-uglify": "^3.0.1",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-postcss": "^0.8.0",
+    "grunt-typescript": "^0.8.0",
+    "grunt-wp-i18n": "^1.0.0",
+    "grunt-wp-readme-to-markdown": "^2.0.1",
+    "node-bourbon": "^4.2.8",
+    "pixrem": "^3.0.2"
+  }
+}
