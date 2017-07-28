@@ -813,12 +813,13 @@ if ( ! class_exists( 'WC_PPP_Brasil_Gateway' ) ) {
 				$cart_items = $order ? $order->get_items() : $cart->get_cart();
 				foreach ( $cart_items as $item_data ) {
 					/** @var WC_Product $product */
-					$product       = new WC_Product( $item_data['variation_id'] ? $item_data['variation_id'] : $item_data['product_id'] );
+					$product       = wc_get_product( $item_data['variation_id'] ? $item_data['variation_id'] : $item_data['product_id'] );
 					$item          = new PayPal\Api\Item();
 					$items[]       = $item;
 					$product_price = $order ? $item_data['line_subtotal'] / $item_data['qty'] : $item_data['line_subtotal'] / $item_data['quantity'];
 					$product_price += $order ? $item_data['line_tax'] / $item_data['qty'] : $item_data['line_tax'] / $item_data['quantity'];
-					$item->setName( $product->get_title() )
+					$product_title = isset( $item_data['variation_id'] ) && $item_data['variation_id'] ? $product->get_title() . ' - ' . implode( ', ', $item_data['variation'] ) : $product->get_title();
+					$item->setName( $product_title )
 					     ->setCurrency( 'BRL' )
 					     ->setQuantity( $order ? $item_data['qty'] : $item_data['quantity'] )
 					     ->setPrice( $product_price )
