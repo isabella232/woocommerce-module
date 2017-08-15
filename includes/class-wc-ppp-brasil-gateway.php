@@ -29,7 +29,7 @@ if ( ! class_exists( 'WC_PPP_Brasil_Gateway' ) ) {
 			$this->id                 = 'wc-ppp-brasil-gateway';
 			$this->has_fields         = true;
 			$this->method_title       = __( 'PayPal Plus Brasil', 'ppp-brasil' );
-			$this->method_description = __( 'Solução PayPal para pagamentos apenas utilizando o Cartão de Crédito.', 'ppp-brasil' );
+			$this->method_description = __( 'Solução PayPal para pagamentos transparentes aonde utiliza-se apenas o Cartão de Crédito.', 'ppp-brasil' );
 			$this->supports           = array( 'products', 'refunds' );
 
 			// Load settings fields.
@@ -317,7 +317,7 @@ if ( ! class_exists( 'WC_PPP_Brasil_Gateway' ) ) {
 					'title'       => __( 'Nome de exibição', 'ppp-brasil' ),
 					'type'        => 'text',
 					'default'     => '',
-					'placeholder' => __( '(Parcelado em até 12x)', 'ppp-brasil' ),
+					'placeholder' => __( 'Exemplo: (Parcelado em até 12x)', 'ppp-brasil' ),
 					'description' => __( 'Será exibido no checkout: Cartão de Crédito (Parcelado em até 12x)', 'ppp-brasil' ),
 					'desc_tip'    => __( 'Por padrão a solução do PayPal Plus é exibida como “Cartão de Crédito”, utilize esta opção para definir um texto adicional como parcelamento ou descontos.', 'ppp-brasil' ),
 				),
@@ -348,7 +348,7 @@ if ( ! class_exists( 'WC_PPP_Brasil_Gateway' ) ) {
 					'type'        => 'checkbox',
 					'label'       => __( 'Habilitar', 'ppp-brasil' ),
 					'desc_tip'    => __( 'Habilite este modo para depurar a aplicação em caso de homologação ou erros.', 'ppp-brasil' ),
-					'description' => sprintf( __( 'Os logs serão salvos na pasta ou caminho %s.', 'woo-paypal-plus-brazil' ), $this->get_log_view() ),
+					'description' => sprintf( __( 'Os logs serão salvos no caminho: %s.', 'woo-paypal-plus-brazil' ), $this->get_log_view() ),
 				),
 			);
 		}
@@ -723,6 +723,15 @@ if ( ! class_exists( 'WC_PPP_Brasil_Gateway' ) ) {
 				$data['email']        = isset( $post_data['billing_email'] ) ? sanitize_text_field( $post_data['billing_email'] ) : '';
 			}
 
+			// Get wcbcf settings
+			$wcbcf_settings = get_option( 'wcbcf_settings' );
+			// Set the person type default if we don't have any person type defined
+			if ( $wcbcf_settings && ! $data['person_type'] && ( $wcbcf_settings['person_type'] == '2' || $wcbcf_settings['person_type'] == '3' ) ) {
+				// The value 2 from person_type in settings is CPF (1) and 3 is CNPJ (2), and 1 is both, that won't reach here.
+				$data['person_type']         = $wcbcf_settings['person_type'] == '2' ? '1' : '2';
+				$data['person_type_default'] = true;
+			}
+
 			// Now set the invalid.
 			$data    = wp_parse_args( $data, $defaults );
 			$invalid = $this->validate_data( $data );
@@ -971,7 +980,7 @@ if ( ! class_exists( 'WC_PPP_Brasil_Gateway' ) ) {
 			}
 
 			// Check the CNPJ
-			if ( $data['person_type'] == '2' && ! $this->is_cpf( $data['cnpj'] ) ) {
+			if ( $data['person_type'] == '2' && ! $this->is_cnpj( $data['cnpj'] ) ) {
 				$errors['cnpj'] = __( 'CNPJ inválido', 'ppp-brasil' );
 			}
 
