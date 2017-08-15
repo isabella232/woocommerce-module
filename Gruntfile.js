@@ -73,7 +73,7 @@ module.exports = function (grunt) {
         // Post CSS
         postcss: {
             options: {
-                map: true, // inline sourcemaps
+                map: false, // inline sourcemaps
                 processors: [
                     require('pixrem')(), // add fallbacks for rem units
                     require('autoprefixer')({browsers: 'last 2 versions'}), // add vendor prefixes
