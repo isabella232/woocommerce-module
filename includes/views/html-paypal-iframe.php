@@ -42,4 +42,11 @@ shuffle( $cards );
             <input type="text" value="Selecionar parcelas para esta compra">
         </div>
     </div>
+    <div class="ppp-dummy-politice">
+        <p>Suas informações serão coletadas de acordo com a <a href="#">Política de Privacidade do PayPal</a>.</p>
+    </div>
+    <div class="ppp-dummy-newsletter">
+        <span class="fake-checkbox"></span>
+        <p>Eu quero receber informações importantes, ofertas especiais e descontos do PayPal.</p>
+    </div>
 </div>

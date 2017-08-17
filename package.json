@@ -1,7 +1,7 @@
 {
   "name": "paypal-plus-brasil",
   "description": "Adicione facilmente opções de pagamento do PayPal Plus ao seu site do WordPress/WooCommerce.",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/apuhlmann/paypal-plus-brasil"
